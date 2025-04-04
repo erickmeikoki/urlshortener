@@ -28,7 +28,13 @@ const Url = mongoose.model("Url", urlSchema);
 
 // Custom CORS middleware
 app.use((req, res, next) => {
-	res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+	const allowedOrigins = ["http://localhost:3000", process.env.FRONTEND_URL];
+	const origin = req.headers.origin;
+
+	if (allowedOrigins.includes(origin)) {
+		res.header("Access-Control-Allow-Origin", origin);
+	}
+
 	res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
 	res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
 	res.header("Access-Control-Allow-Credentials", "true");
@@ -78,7 +84,7 @@ app.post("/api/urls", async (req, res) => {
 		// Return the shortened URL using the backend URL
 		const response = {
 			originalUrl,
-			shortUrl: `http://localhost:5001/${shortId}`
+			shortUrl: `${process.env.BACKEND_URL}/${shortId}`
 		};
 		console.log("Sending response:", response);
 		res.json(response);
@@ -138,8 +144,7 @@ app.get("/api/urls/:shortId/analytics", async (req, res) => {
 });
 
 // Start server
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
-	console.log(`Server running on port ${PORT}`);
-	console.log(`CORS enabled for origin: http://localhost:3000`);
+	console.log(`Server is running on port ${PORT}`);
 });

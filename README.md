@@ -1,29 +1,60 @@
 # URL Shortener
 
-A modern URL shortener application built with React, Node.js, and Express. This application allows users to shorten long URLs, generate QR codes, and track analytics for shortened links.
+A modern URL shortener application built with React, Node.js, and MongoDB. This application allows users to shorten long URLs, track analytics, and generate QR codes for shortened URLs.
+
+## Live Demo
+
+- Frontend: [https://urlshortener.vercel.app](https://urlshortener.vercel.app)
+- Backend API: [https://urlshortener-backend.onrender.com](https://urlshortener-backend.onrender.com)
 
 ## Features
 
-- 🔗 URL shortening with custom aliases
-- 📊 Analytics tracking (clicks, timestamps)
+- 🔗 URL shortening with custom short IDs
+- 📊 Analytics tracking (clicks, last accessed)
 - 📱 QR code generation for shortened URLs
-- 🎨 Modern Material-UI interface
-- 🌐 Responsive design
-- 🔒 Secure URL validation
+- 🌐 CORS support for cross-origin requests
+- 🔒 Secure MongoDB integration
+- 📱 Responsive design for all devices
+- 🎨 Modern UI with Material-UI components
+- 📝 URL validation and error handling
 
 ## Tech Stack
 
-- **Frontend:**
+### Frontend
 
-  - React
-  - Material-UI
-  - QRCode.react
-  - Axios
+- React.js
+- Material-UI (@mui/material)
+- Axios for API calls
+- QRCode.react for QR code generation
 
-- **Backend:**
-  - Node.js
-  - Express
-  - nanoid (for generating short IDs)
+### Backend
+
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- Nanoid for short URL generation
+- Dotenv for environment management
+
+## Hosting
+
+### Frontend
+
+The frontend is hosted on [Vercel](https://vercel.com), providing:
+
+- Automatic deployments from GitHub
+- Global CDN
+- SSL encryption
+- Custom domain support
+
+### Backend
+
+The backend is hosted on [Render](https://render.com), offering:
+
+- Automatic deployments from GitHub
+- Free SSL certificates
+- Environment variable management
+- MongoDB integration
+- Health monitoring
 
 ## Getting Started
 
@@ -31,143 +62,112 @@ A modern URL shortener application built with React, Node.js, and Express. This 
 
 - Node.js (v14 or higher)
 - npm or yarn
+- MongoDB (local or Atlas)
 
 ### Installation
 
 1. Clone the repository:
 
-```bash
-git clone https://github.com/erickmeikoki/urlshortener.git
-cd urlshortener
-```
+   ```bash
+   git clone https://github.com/erickmeikoki/urlshortener.git
+   cd urlshortener
+   ```
 
-2. Install dependencies:
+2. Install frontend dependencies:
 
-```bash
-# Install frontend dependencies
-npm install
+   ```bash
+   cd frontend
+   npm install
+   ```
 
-# Install backend dependencies
-cd backend
-npm install
-```
+3. Install backend dependencies:
 
-3. Start the development servers:
+   ```bash
+   cd backend
+   npm install
+   ```
 
-```bash
-# Start the frontend (from root directory)
-npm start
+4. Create environment files:
+   - Frontend (.env):
+     ```
+     REACT_APP_API_URL=http://localhost:5001
+     ```
+   - Backend (.env):
+     ```
+     PORT=5001
+     MONGODB_URI=mongodb://localhost:27017/urlshortener
+     FRONTEND_URL=http://localhost:3000
+     BACKEND_URL=http://localhost:5001
+     ```
 
-# Start the backend (from backend directory)
-npm start
-```
+### Running Locally
 
-The frontend will run on `http://localhost:3000` and the backend on `http://localhost:5001`.
+1. Start the backend server:
 
-## Usage
+   ```bash
+   cd backend
+   npm start
+   ```
 
-1. Enter a long URL in the input field
-2. Click "Shorten" to generate a shortened URL
-3. Copy the shortened URL or scan the generated QR code
-4. View analytics by clicking on the analytics button
+2. Start the frontend development server:
+
+   ```bash
+   cd frontend
+   npm start
+   ```
+
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## API Endpoints
 
-- `POST /api/urls` - Create a new shortened URL
-- `GET /api/urls/:shortId` - Redirect to the original URL
-- `GET /api/urls/:shortId/analytics` - Get analytics for a shortened URL
+- `POST /api/urls` - Create a new short URL
+- `GET /:shortId` - Redirect to original URL
+- `GET /api/urls/:shortId/analytics` - Get URL analytics
 
 ## Deployment
 
-### Frontend Deployment (Vercel)
+### Frontend (Vercel)
 
-1. Create a Vercel account at https://vercel.com
-2. Install Vercel CLI:
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Set environment variables in Vercel dashboard
+4. Deploy automatically or manually
 
-```bash
-npm install -g vercel
-```
+### Backend (Render)
 
-3. Deploy the frontend:
+1. Push your code to GitHub
+2. Create a new Web Service on Render
+3. Connect your repository
+4. Set environment variables
+5. Deploy
 
-```bash
-# From the root directory
-vercel
-```
+## Environment Variables
 
-4. Configure environment variables in Vercel dashboard:
+### Frontend
 
-```
-REACT_APP_API_URL=https://your-backend-url.com
-```
+- `REACT_APP_API_URL`: Backend API URL (e.g., https://urlshortener-backend.onrender.com)
 
-### Backend Deployment (Heroku)
+### Backend
 
-1. Create a Heroku account at https://heroku.com
-2. Install Heroku CLI:
-
-```bash
-npm install -g heroku
-```
-
-3. Login to Heroku:
-
-```bash
-heroku login
-```
-
-4. Create a new Heroku app:
-
-```bash
-heroku create your-app-name
-```
-
-5. Deploy the backend:
-
-```bash
-# From the backend directory
-git push heroku main
-```
-
-6. Configure environment variables in Heroku dashboard:
-
-```
-PORT=5001
-```
-
-### Alternative Backend Hosting (Render)
-
-1. Create a Render account at https://render.com
-2. Create a new Web Service
-3. Connect your GitHub repository
-4. Configure the service:
-   - Build Command: `npm install`
-   - Start Command: `node server.js`
-   - Environment Variables:
-     ```
-     PORT=5001
-     ```
-
-### Important Notes for Deployment
-
-1. Update the frontend's API URL in `src/App.js` to point to your deployed backend URL
-2. Ensure CORS is properly configured in the backend to allow requests from your frontend domain
-3. Consider using a custom domain for your shortened URLs
-4. For production, consider adding:
-   - Rate limiting
-   - SSL certificates
-   - Database persistence (currently using in-memory storage)
+- `PORT`: Server port (default: 5001)
+- `MONGODB_URI`: MongoDB connection string
+- `FRONTEND_URL`: Frontend application URL
+- `BACKEND_URL`: Backend API URL
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
 - Material-UI for the beautiful components
-- QRCode.react for QR code generation
-- nanoid for generating unique short IDs
+- Nanoid for the URL shortening algorithm
+- Vercel and Render for hosting services

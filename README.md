@@ -77,6 +77,87 @@ The frontend will run on `http://localhost:3000` and the backend on `http://loca
 - `GET /api/urls/:shortId` - Redirect to the original URL
 - `GET /api/urls/:shortId/analytics` - Get analytics for a shortened URL
 
+## Deployment
+
+### Frontend Deployment (Vercel)
+
+1. Create a Vercel account at https://vercel.com
+2. Install Vercel CLI:
+
+```bash
+npm install -g vercel
+```
+
+3. Deploy the frontend:
+
+```bash
+# From the root directory
+vercel
+```
+
+4. Configure environment variables in Vercel dashboard:
+
+```
+REACT_APP_API_URL=https://your-backend-url.com
+```
+
+### Backend Deployment (Heroku)
+
+1. Create a Heroku account at https://heroku.com
+2. Install Heroku CLI:
+
+```bash
+npm install -g heroku
+```
+
+3. Login to Heroku:
+
+```bash
+heroku login
+```
+
+4. Create a new Heroku app:
+
+```bash
+heroku create your-app-name
+```
+
+5. Deploy the backend:
+
+```bash
+# From the backend directory
+git push heroku main
+```
+
+6. Configure environment variables in Heroku dashboard:
+
+```
+PORT=5001
+```
+
+### Alternative Backend Hosting (Render)
+
+1. Create a Render account at https://render.com
+2. Create a new Web Service
+3. Connect your GitHub repository
+4. Configure the service:
+   - Build Command: `npm install`
+   - Start Command: `node server.js`
+   - Environment Variables:
+     ```
+     PORT=5001
+     ```
+
+### Important Notes for Deployment
+
+1. Update the frontend's API URL in `src/App.js` to point to your deployed backend URL
+2. Ensure CORS is properly configured in the backend to allow requests from your frontend domain
+3. Consider using a custom domain for your shortened URLs
+4. For production, consider adding:
+   - Rate limiting
+   - SSL certificates
+   - Database persistence (currently using in-memory storage)
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.

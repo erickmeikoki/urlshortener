@@ -9,11 +9,17 @@ dotenv.config();
 // Create Express app
 const app = express();
 
-// Connect to MongoDB
+// Connect to MongoDB with improved error handling
 mongoose
-	.connect(process.env.MONGODB_URI)
+	.connect(process.env.MONGODB_URI, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true
+	})
 	.then(() => console.log("Connected to MongoDB"))
-	.catch((err) => console.error("MongoDB connection error:", err));
+	.catch((err) => {
+		console.error("MongoDB connection error:", err);
+		process.exit(1); // Exit if MongoDB connection fails
+	});
 
 // URL Schema
 const urlSchema = new mongoose.Schema({
@@ -31,7 +37,7 @@ app.use((req, res, next) => {
 	const allowedOrigins = [
 		"http://localhost:3000",
 		process.env.FRONTEND_URL,
-		"https://urlshortener.vercel.app" // Add your Vercel domain here
+		"https://urlshortener.vercel.app"
 	];
 	const origin = req.headers.origin;
 
@@ -43,7 +49,6 @@ app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
 	res.header("Access-Control-Allow-Credentials", "true");
 
-	// Handle preflight requests
 	if (req.method === "OPTIONS") {
 		res.sendStatus(204);
 		return;
@@ -62,6 +67,23 @@ app.use((req, res, next) => {
 	console.log("Origin:", req.headers.origin);
 	console.log("Host:", req.headers.host);
 	next();
+});
+
+// Root route
+app.get("/", (req, res) => {
+	res.json({
+		status: "ok",
+		message: "URL Shortener API is running",
+		version: "1.0.0"
+	});
+});
+
+// Health check route
+app.get("/health", (req, res) => {
+	res.json({
+		status: "ok",
+		timestamp: new Date().toISOString()
+	});
 });
 
 // Routes

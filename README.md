@@ -1,71 +1,92 @@
-# Getting Started with Create React App
+# URL Shortener
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern URL shortener application built with React, Node.js, and Express. This application allows users to shorten long URLs, generate QR codes, and track analytics for shortened links.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- 🔗 URL shortening with custom aliases
+- 📊 Analytics tracking (clicks, timestamps)
+- 📱 QR code generation for shortened URLs
+- 🎨 Modern Material-UI interface
+- 🌐 Responsive design
+- 🔒 Secure URL validation
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend:**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+  - React
+  - Material-UI
+  - QRCode.react
+  - Axios
 
-### `npm test`
+- **Backend:**
+  - Node.js
+  - Express
+  - nanoid (for generating short IDs)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting Started
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js (v14 or higher)
+- npm or yarn
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone the repository:
 
-### `npm run eject`
+```bash
+git clone https://github.com/erickmeikoki/urlshortener.git
+cd urlshortener
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Install dependencies:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+# Install frontend dependencies
+npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Install backend dependencies
+cd backend
+npm install
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. Start the development servers:
 
-## Learn More
+```bash
+# Start the frontend (from root directory)
+npm start
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Start the backend (from backend directory)
+npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The frontend will run on `http://localhost:3000` and the backend on `http://localhost:5001`.
 
-### Code Splitting
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. Enter a long URL in the input field
+2. Click "Shorten" to generate a shortened URL
+3. Copy the shortened URL or scan the generated QR code
+4. View analytics by clicking on the analytics button
 
-### Analyzing the Bundle Size
+## API Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- `POST /api/urls` - Create a new shortened URL
+- `GET /api/urls/:shortId` - Redirect to the original URL
+- `GET /api/urls/:shortId/analytics` - Get analytics for a shortened URL
 
-### Making a Progressive Web App
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-### Advanced Configuration
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-### Deployment
+## Acknowledgments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# React---Movie-Draft1
+- Material-UI for the beautiful components
+- QRCode.react for QR code generation
+- nanoid for generating unique short IDs

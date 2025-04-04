@@ -28,7 +28,11 @@ const Url = mongoose.model("Url", urlSchema);
 
 // Custom CORS middleware
 app.use((req, res, next) => {
-	const allowedOrigins = ["http://localhost:3000", process.env.FRONTEND_URL];
+	const allowedOrigins = [
+		"http://localhost:3000",
+		process.env.FRONTEND_URL,
+		"https://urlshortener.vercel.app" // Add your Vercel domain here
+	];
 	const origin = req.headers.origin;
 
 	if (allowedOrigins.includes(origin)) {
@@ -53,8 +57,10 @@ app.use(express.json());
 
 // Log all requests
 app.use((req, res, next) => {
-	console.log(`${req.method} ${req.url}`);
+	console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
 	console.log("Headers:", req.headers);
+	console.log("Origin:", req.headers.origin);
+	console.log("Host:", req.headers.host);
 	next();
 });
 
